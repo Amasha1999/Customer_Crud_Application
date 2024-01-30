@@ -1,5 +1,6 @@
 <?php
 include "db_conn.php";
+$id = $_GET['id'];
 
 if(isset($_POST['submit'])){
     $first_name = $_POST['first_name'];
@@ -7,18 +8,18 @@ if(isset($_POST['submit'])){
     $email = $_POST['email'];
     $gender = $_POST['gender'];
 
-    $sql = "INSERT INTO `crud`(`first_name`, `last_name`, `email`, `gender`) 
-    VALUES ('$first_name','$last_name','$email','$gender')";
+    $sql = "UPDATE `crud` SET `first_name`='$first_name', `last_name`='$last_name', `email`='$email', `gender`='$gender' WHERE id=$id";
     
     $result = mysqli_query($conn, $sql);
 
     if($result) {
-        header("Location: index.php?msg=New record created successfully");
+        header("Location: index.php?msg= Data Updated successfully");
     } else {
         echo "Failed: "  . mysqli_error($conn);
     }
 }
 ?>
+
 
 
 
@@ -49,16 +50,26 @@ if(isset($_POST['submit'])){
 </nav>
 <div class="container">
     <div class="text-center mb-4">
-        <h3>𝐀𝐝𝐝 𝐍𝐞𝐰 𝐂𝐮𝐬𝐭𝐨𝐦𝐞𝐫 </h3>
-        <p class="text-muted"> Complete the form below to add a new user </p>
+        <h3>𝐄𝐝𝐢𝐭 𝐔𝐬𝐞𝐫 𝐈𝐧𝐟𝐨𝐫𝐦𝐚𝐭𝐢𝐨𝐧 </h3>
+        <p class="text-muted"> Click update after changing any information </p>
     </div>
+
+    <?php
+    $id = $_GET['id'];
+    $sql = "SELECT * FROM `crud` WHERE id = $id LIMIT 1";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+
+
+
+    ?>
 
     <div class="container d-flex justify-content-center">
         <form action="" method="post" style="width:50vw; min-width:300px;">
         <div class="row mb-3">
             <div class="col">
                 <label class="form-label">First Name</label>
-                <input type="text" class="form-control" name="first_name" placeholder="John" required>
+                <input type="text" class="form-control" name="first_name" value="<?php echo $row ['first_name'] ?>">
              </div>   
 
         </div>
@@ -66,32 +77,32 @@ if(isset($_POST['submit'])){
 
         <div class="mb-3">
         <label class="form-label">Last Name</label>
-                <input type="text" class="form-control" name="last_name" placeholder="Roman" required>
+                <input type="text" class="form-control" name="last_name" value="<?php echo $row ['last_name'] ?>">
 
         </div>
 
 
         <div class="mb-3">
         <label class="form-label">Email</label>
-                <input type="text" class="form-control" name="email" placeholder="name@example.com" required>
+                <input type="text" class="form-control" name="email" value="<?php echo $row ['email'] ?>">
 
         </div>
 
-        <div class="form-group mb">
+        <div class="form-group mb-3" >
             <label>Gender</label>&nbsp;
-            <input type="radio" class="form-check-input" name="gender" id="male" value="Male">
-            <label for="male" class="form-input-label">Male </label>&nbsp;
+            <input type="radio" class="form-check-input" name="gender" id="male" value="Male" <?php echo ($row['gender']=='male')? "checked":"";  ?>>
+            <label for="male" class="form-input-label"> Male </label>&nbsp;
 
-            <input type="radio" class="form-check-input" name="gender" id="female" value="Female">
-            <label for="female" class="form-input-label">Female </label>
+            <input type="radio" class="form-check-input" name="gender" id="female" value="Female" <?php echo ($row['gender']=='female')? "checked":"";  ?>>
+            <label for="female" class="form-input-label"> Female </label>&nbsp;
         </div>
 
 
-        <div>
-            <button type="submit" class="btn btn-success" name="submit">Save </button>
-
-            <a href="index.php" class="btn btn-danger"> Cancel</a>
+        <div class="mb-3">
+                <button type="submit" class="btn btn-success" name="submit"> Update </button>
+                <a href="index.php" class="btn btn-danger ms-2"> Cancel</a>
         </div>
+
 
         
         </form>

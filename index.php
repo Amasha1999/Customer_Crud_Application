@@ -23,6 +23,15 @@
     𝐂𝐮𝐬𝐭𝐨𝐦𝐞𝐫 𝐂𝐫𝐮𝐝 𝐀𝐩𝐩𝐥𝐢𝐜𝐚𝐭𝐢𝐨𝐧
 </nav>
 <div class="container">
+<?php
+  if(isset($_GET['msg'])){
+    $msg = $_GET['msg'];
+    echo "<div class='alert alert-success'> $msg
+    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+    </div>";
+  }
+?>
+
   
     <a href="add_new.php" class="btn btn-dark mb-3">Add New </a>
     
