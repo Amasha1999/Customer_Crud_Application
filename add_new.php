@@ -77,7 +77,7 @@ if(isset($_POST['submit'])){
 
         </div>
 
-        <div class="form-group mb">
+        <div class="form-group mb-3">
             <label>Gender</label>&nbsp;
             <input type="radio" class="form-check-input" name="gender" id="male" value="Male">
             <label for="male" class="form-input-label">Male </label>&nbsp;
